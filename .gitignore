@@ -1,0 +1,17 @@
+# CMake build output (regenerated on every build)
+build/
+
+# Compiler / linker artifacts, in case any end up outside build/
+*.o
+*.obj
+*.d
+*.su
+*.map
+*.elf
+*.bin
+*.hex
+
+# OS clutter
+Thumbs.db
+desktop.ini
+.DS_Store
