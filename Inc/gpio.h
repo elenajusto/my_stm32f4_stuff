@@ -11,6 +11,10 @@ typedef enum {
     GPIO_MODE_ANALOG = 3
 } gpio_mode_t;
 
+#define MODIFY_FIELD(reg, field, value) \
+((reg) = ((reg) & ~(field ## _Msk)) | \
+(((uint32_t)(value) << field ## _Pos) & field ## _Msk))
+
 void init_pin(GPIO_TypeDef *port, uint8_t pin, gpio_mode_t mode);
 
 void pin_high(GPIO_TypeDef *port, uint8_t pin);

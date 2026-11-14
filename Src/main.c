@@ -1,3 +1,4 @@
+#include "stm32f411xe.h"
 #include "stm32f4xx.h"
 #include "gpio.h"
 #include "delay.h"
@@ -25,7 +26,7 @@ int main(void) {
 
 /* Function definitions */
 void init_port_a(void) {
-	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
-	init_pin(GPIOA, EXTERNAL_LED_PIN, GPIO_MODE_OUTPUT);    
+	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;								// Enable peripheral clock for GPIOA
+	MODIFY_FIELD(GPIOA->MODER, GPIO_MODER_MODER1, GPIO_MODE_OUTPUT);	// Configure PA1 for output
 }
 
