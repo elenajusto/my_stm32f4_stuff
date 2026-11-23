@@ -15,5 +15,9 @@ int main(void) {
 		// Transmit
 		usart2_transmit('M');
 		delay(500);
+
+		if ((USART2->SR & USART_SR_RXNE) != 0) {
+			usart2_transmit('!');
+		}
 	}
 }
