@@ -37,12 +37,14 @@ void usart2_init(void) {
 }
 
 void usart2_transmit(uint8_t data) {
+    // TXE - Transmit data register empty flag - wait until USART2->DR is empty before writing new value
     while ((USART2->SR & USART_SR_TXE) == 0) {
     };
     USART2->DR = data;
 }
 
 uint8_t usart2_receive(void) {
+    // RXNE - Read data register not empty flag - wait until data has been received before reading
     while ((USART2->SR & USART_SR_RXNE) == 0) {
     };
     return USART2->DR & 0xFF;            // 0xFF keeps low 8 bits
