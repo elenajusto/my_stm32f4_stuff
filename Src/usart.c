@@ -36,7 +36,7 @@ void usart2_init(void) {
     USART2->CR1 |= USART_CR1_UE;
 }
 
-void usart2_transmit(uint8_t data) {
+void usart2_transmit(char data) {
     // TXE - Transmit data register empty flag - wait until USART2->DR is empty before writing new value
     while ((USART2->SR & USART_SR_TXE) == 0) {
     };

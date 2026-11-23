@@ -13,6 +13,7 @@ int main(void) {
 	/* Main Program Loop */
 	while(1) {
 		// Transmit
-		usart2_transmit('!');
+		usart2_transmit('M');
+		delay(500);
 	}
 }

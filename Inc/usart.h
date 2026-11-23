@@ -5,7 +5,7 @@
 #include "gpio.h"
 
 void usart2_init(void);
-void usart2_transmit(uint8_t data);
+void usart2_transmit(char data);
 uint8_t usart2_receive(void);
 
 #endif /* USART */
