@@ -13,11 +13,18 @@ int main(void) {
 	/* Main Program Loop */
 	while(1) {
 		// Transmit
-		usart2_transmit('M');
+		usart2_print("Meow\r\n");
 		delay(500);
 
 		if ((USART2->SR & USART_SR_RXNE) != 0) {
-			usart2_transmit('!');
+			char received_char = usart2_receive();
+			usart2_print("Received: ");
+			usart2_transmit(received_char);
+			usart2_print("\r\n");
+
+			if (received_char == 'd' || received_char == 'D') {
+				usart2_print("DEEZ NUTS\r\n");
+			}
 		}
 	}
 }
