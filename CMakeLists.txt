@@ -33,6 +33,7 @@ target_sources(${PROJECT_NAME} PRIVATE
   # User defined sources
   "${CMAKE_CURRENT_SOURCE_DIR}/Src/gpio.c"
   "${CMAKE_CURRENT_SOURCE_DIR}/Src/delay.c"
+  "${CMAKE_CURRENT_SOURCE_DIR}/Src/usart.c"
   "${CMAKE_CURRENT_SOURCE_DIR}/CMSIS/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c"
 )
 
