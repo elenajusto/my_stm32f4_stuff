@@ -26,23 +26,14 @@ void usart2_init(void) {
     // Set baud rate - 9600
     USART2->BRR = SYSTEM_CLOCK / USART_BAUD;   // f_ck / baud 
 
-    // Set parity - None
-    MODIFY_FIELD(USART2->CR1, USART_CR1_PCE, 0);
-
-    // Set data length - 8
-    MODIFY_FIELD(USART2->CR1, USART_CR1_M, 0);
-    
-    // Set stop bit - 1
-    MODIFY_FIELD(USART2->CR2, USART_CR2_STOP, 0);
-
     // Enable transmitter
-    MODIFY_FIELD(USART2->CR1, USART_CR1_TE, 1);
+    USART2->CR1 |= USART_CR1_TE;
 
-    // Enable receiever
-    MODIFY_FIELD(USART2->CR1, USART_CR1_RE, 1);
+    // Enable receiver
+    USART2->CR1 |= USART_CR1_RE;
 
     // Enable UART
-    MODIFY_FIELD(USART2->CR1, USART_CR1_UE, 1);
+    USART2->CR1 |= USART_CR1_UE;
 }
 
 void usart2_transmit(uint8_t data) {
@@ -54,5 +45,5 @@ void usart2_transmit(uint8_t data) {
 uint8_t usart2_receive(void) {
     while ((USART2->SR & USART_SR_RXNE) == 0) {
     };
-    return USART2->DR & 0xFF;            // 0xFF checks for 8 bits
+    return USART2->DR & 0xFF;            // 0xFF keeps low 8 bits
 }
