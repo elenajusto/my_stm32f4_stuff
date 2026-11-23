@@ -4,7 +4,7 @@
 #include "stm32f4xx.h"
 #include <stdint.h>
 
-#define USART_CLOCK_HZ  (16UL * 1000UL * 1000UL)   // HSI 16 MHz, APB1 prescaler = 1
+#define SYSTEM_CLOCK    (16UL * 1000UL * 1000UL)   // 16 MHz
 #define USART_BAUD      9600UL
 
 // Use PA2 (TX2) and PA3 (RX2) for USART
@@ -24,7 +24,7 @@ void usart2_init(void) {
     MODIFY_FIELD(GPIOA->AFR[0], GPIO_AFRL_AFSEL3, 7); 
 
     // Set baud rate - 9600
-    USART2->BRR = (USART_CLOCK_HZ + USART_BAUD / 2) / USART_BAUD;
+    USART2->BRR = SYSTEM_CLOCK / USART_BAUD;   // f_ck / baud 
 
     // Set parity - None
     MODIFY_FIELD(USART2->CR1, USART_CR1_PCE, 0);
