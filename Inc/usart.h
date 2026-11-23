@@ -6,6 +6,7 @@
 
 void usart2_init(void);
 void usart2_transmit(char data);
+void usart2_print(char *str);
 uint8_t usart2_receive(void);
 
 #endif /* USART */

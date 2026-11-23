@@ -43,9 +43,18 @@ void usart2_transmit(char data) {
     USART2->DR = data;
 }
 
+void usart2_print(char *str){
+    // Loop through string until null terminator reached
+    while(*str != '\0') {
+        // Send characters within the string
+        usart2_transmit(*str);  // Pass pointer to character in string
+        str++;                       // Increment pointer reference to next character
+    }
+}
+
 uint8_t usart2_receive(void) {
     // RXNE - Read data register not empty flag - wait until data has been received before reading
     while ((USART2->SR & USART_SR_RXNE) == 0) {
     };
-    return USART2->DR & 0xFF;            // 0xFF keeps low 8 bits
+    return USART2->DR & 0xFF;            // 0xFF keeps lowest 8 bits
 }
