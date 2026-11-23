@@ -11,6 +11,7 @@ typedef enum {
     GPIO_MODE_ANALOG = 3
 } gpio_mode_t;
 
+// Clear a field within a register, then write value into it (read-modify-write)
 #define MODIFY_FIELD(reg, field, value) \
 ((reg) = ((reg) & ~(field ## _Msk)) | \
 (((uint32_t)(value) << field ## _Pos) & field ## _Msk))

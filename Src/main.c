@@ -7,10 +7,6 @@
 
 /* Main Program Entry */
 int main(void) {
-	// Init variables
-	uint8_t receieve_data;
-	uint8_t transmit_data;
-
 	// Init peripheral 
 	usart2_init();
 

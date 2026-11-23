@@ -10,12 +10,12 @@
 // Use PA2 (TX2) and PA3 (RX2) for USART
 void usart2_init(void) {
     // Enable clock to USART2 peripheral
-    MODIFY_FIELD(RCC->APB1ENR, RCC_APB1ENR_USART2EN, 1);	
+    RCC->APB1ENR |= RCC_APB1ENR_USART2EN;	
 
     // Enable clock to PORTA
-    MODIFY_FIELD(RCC->AHB1ENR, RCC_AHB1ENR_GPIOAEN, 1);
+    RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
 
-    // Set PA2 for TX2 - AF7
+    // Set PA2 for TX2 - AF7 
     MODIFY_FIELD(GPIOA->MODER, GPIO_MODER_MODE2, GPIO_MODE_AF);  
     MODIFY_FIELD(GPIOA->AFR[0], GPIO_AFRL_AFSEL2, 7);           
 
