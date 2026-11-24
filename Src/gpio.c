@@ -20,7 +20,7 @@ static void gpio_enable_clock(GPIO_TypeDef *port) {
 
 void gpio_init(GPIO_TypeDef *port, uint8_t pin, gpio_mode_t mode,
                gpio_otype_t otype, gpio_speed_t speed, gpio_pull_t pull,
-               uint8_t af) {
+               gpio_af_t af) {
 
 	// Clock
 	gpio_enable_clock(port);
@@ -43,10 +43,11 @@ void gpio_init(GPIO_TypeDef *port, uint8_t pin, gpio_mode_t mode,
 	}
 }
 
-void pin_high(GPIO_TypeDef *port, uint8_t pin) {
-	port->BSRR = (1UL << pin);
-}
-
-void pin_low(GPIO_TypeDef *port, uint8_t pin) {
-	port->BSRR = (1UL << (pin + 16));
+void gpio_write(GPIO_TypeDef *port, uint8_t pin, gpio_state_t value) {
+	if (value == GPIO_LOW) {
+		port->BSRR |= (1UL << (pin + 16));
+	}
+	if (value == GPIO_HIGH) {
+		port->BSRR |= (1UL << pin);
+	}
 }
