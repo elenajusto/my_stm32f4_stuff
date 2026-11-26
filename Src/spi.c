@@ -20,7 +20,7 @@ void spi1_init(void){
 
     // Configure CS - PA4
     gpio_init(GPIOA, 4, GPIO_MODE_OUTPUT, GPIO_OTYPE_PUSH_PULL, GPIO_SPEED_LOW, GPIO_PULL_NONE, GPIO_AF0);
-    gpio_write(GPIOA, 4, GPIO_HIGH);
+    gpio_write(GPIOA, 4, GPIO_HIGH);    // CS line high while idle
 
     // Configure CR1
     SPI1->CR1 &= ~SPI_CR1_SPE;      // Disable SPI during configuration
