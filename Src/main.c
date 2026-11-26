@@ -3,35 +3,27 @@
 #include "gpio.h"
 #include "delay.h"
 #include "usart.h"
+#include "spi.h"
 #include <stdint.h>
 
 /* Main Program Entry */
 int main(void) {
 	// Init peripheral 
-	usart2_init();
-
-	// Init PA4 for external LED
-	gpio_init(GPIOA, 4, GPIO_MODE_OUTPUT, GPIO_OTYPE_PUSH_PULL, GPIO_SPEED_FAST, GPIO_PULL_NONE, GPIO_AF0);
+	spi1_init();
 
 	/* Main Program Loop */
 	while(1) {
+		// Set CS line to low - start SPI transmission
+		gpio_write(GPIOA, 3, GPIO_LOW);
+
 		// Transmit
-		usart2_print("Meow\r\n");
-		gpio_write(GPIOA, 4, GPIO_HIGH);
-		delay(500);
+		spi1_transmit_8bit(0x5A);
 
-		if ((USART2->SR & USART_SR_RXNE) != 0) {
-			char received_char = usart2_receive();
-			usart2_print("Received: ");
-			usart2_transmit(received_char);
-			usart2_print("\r\n");
+		// Check if peripheral busy before continuing
+		while(SPI1->SR & SPI_SR_BSY){
+		};
 
-			if (received_char == 'd' || received_char == 'D') {
-				usart2_print("DEEZ NUTS\r\n");
-			}
-
-			gpio_write(GPIOA, 4, GPIO_LOW);
-			delay(500);
-		}
+		// Set CS line to high - end SPI transmission
+		gpio_write(GPIOA, 3, GPIO_HIGH);
 	}
 }
