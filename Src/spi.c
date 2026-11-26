@@ -1,6 +1,7 @@
 #include "spi.h"
 #include "gpio.h"
 #include "stm32f411xe.h"
+#include <stdint.h>
 
 void spi1_init(void){
     // Enable clock to GPIOA
@@ -18,9 +19,9 @@ void spi1_init(void){
     // Configure MOSI - PA7
     gpio_init(GPIOA, 7, GPIO_MODE_AF, GPIO_OTYPE_PUSH_PULL, GPIO_SPEED_LOW, GPIO_PULL_NONE, GPIO_AF5);
 
-    // Configure CS - PA4
-    gpio_init(GPIOA, 4, GPIO_MODE_OUTPUT, GPIO_OTYPE_PUSH_PULL, GPIO_SPEED_LOW, GPIO_PULL_NONE, GPIO_AF0);
-    gpio_write(GPIOA, 4, GPIO_HIGH);    // CS line high while idle
+    // Configure CS - PA3
+    gpio_init(GPIOA, 3, GPIO_MODE_OUTPUT, GPIO_OTYPE_PUSH_PULL, GPIO_SPEED_LOW, GPIO_PULL_NONE, GPIO_AF0);
+    gpio_write(GPIOA, 3, GPIO_HIGH);    // CS line high while idle
 
     // Configure CR1
     SPI1->CR1 &= ~SPI_CR1_SPE;      // Disable SPI during configuration
@@ -32,4 +33,13 @@ void spi1_init(void){
 
     // Enable SPI
     SPI1->CR1 |= SPI_CR1_SPE;
+}
+
+void spi1_transmit_8bit(uint8_t data) {
+    // Wait for transmit buffer to be empty
+    while( !(SPI1->SR & SPI_SR_TXE) ){
+    };
+
+    // Write to SPI data register
+    *((volatile uint8_t *) &SPI1->DR) = data;   // Cast data register address (16 bits) into 8 bit pointer, dereferenced so data can be placed in it
 }
